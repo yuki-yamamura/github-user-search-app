@@ -1,14 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { FC } from 'react';
-import { GitHubUser } from '@/types/GitHubUser';
+import { User } from '@/types/User';
+import OptionalInfoList from './OptionalInfoList';
 
 type Props = {
-  user: GitHubUser;
+  user: User;
 };
 
-const GitHubUserProfile: FC<Props> = ({ user }) => {
+const UserProfile: FC<Props> = ({ user }) => {
   const formattedDate = dayjs(user.created_at).format('D MMM YYYY');
 
   return (
@@ -54,39 +54,9 @@ const GitHubUserProfile: FC<Props> = ({ user }) => {
           </div>
         </div>
       </div>
-      {/* TODO: change transparency if property is null */}
-      <div className="flex flex-col justify-start gap-y-4">
-        <div className="flex gap-x-4">
-          <div>
-            <label htmlFor="location" />
-            <img src="/assets/icon-location.svg" alt="location" />
-          </div>
-          <div id="location">{user.location ?? 'Not Available'}</div>
-        </div>
-        <div className="flex gap-x-4">
-          <div>
-            <label htmlFor="blog" />
-            <img src="/assets/icon-website.svg" alt="blog" />
-          </div>
-          <div id="blog">{user.blog ?? 'Not Available'}</div>
-        </div>
-        <div className="flex gap-x-4">
-          <div>
-            <label htmlFor="twitter" />
-            <img src="/assets/icon-twitter.svg" alt="twitter" />
-          </div>
-          <div id="twitter">{user.twitter_username ?? 'Not Available'}</div>
-        </div>
-        <div className="flex gap-x-4">
-          <div>
-            <label htmlFor="company" />
-            <img src="/assets/icon-company.svg" alt="company" />
-          </div>
-          <div id="company">{user.company ?? 'Not Available'}</div>
-        </div>
-      </div>
+      <OptionalInfoList user={user} />
     </div>
   );
 };
 
-export default GitHubUserProfile;
+export default UserProfile;

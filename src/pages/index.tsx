@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import GitHubUserProfile from '@/components/GitHubUserProfile';
 import SearchBar from '@/components/SearchBar';
-import { gitHubUser } from '@/mocks/fakeData';
+import UserProfile from '@/components/UserProfile';
+import { fakeUser } from '@/mocks/fakeData';
+import { User } from '@/types/User';
 
 const Home = () => {
   return (
@@ -31,7 +32,7 @@ const Home = () => {
           <SearchBar />
         </div>
         <div className="mb-20">
-          <GitHubUserProfile user={gitHubUser} />
+          <UserProfile user={fakeUser as User} />
         </div>
       </main>
     </>
