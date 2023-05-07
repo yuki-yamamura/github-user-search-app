@@ -1,3 +1,4 @@
+import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import SearchBar from '@/components/SearchBar';
@@ -5,7 +6,7 @@ import UserProfile from '@/components/UserProfile';
 import { fakeUser } from '@/mocks/fakeData';
 import { User } from '@/types/User';
 
-const Home = () => {
+const Home: NextPage = () => {
   return (
     <>
       <Head>
@@ -14,12 +15,12 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className="mx-auto flex max-w-xl flex-col justify-center md:max-w-3xl">
         <div className="mb-9 mt-8 flex items-center justify-between">
           {/* TODO: implement dark mode */}
           <h1 className="text-[26px] text-black">divfinder</h1>
           <div className="flex gap-x-5">
-            <div>DARK</div>
+            <div className="text-[13px]">DARK</div>
             <Image
               src="/assets/icon-moon.svg"
               alt="moon"

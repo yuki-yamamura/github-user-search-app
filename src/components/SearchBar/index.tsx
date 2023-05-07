@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import { FC, useEffect, useRef } from 'react';
 import Button from './Button';
 
@@ -15,13 +15,12 @@ const SearchBar: FC = () => {
 
   return (
     <form className="flex items-center justify-between rounded-2xl bg-white py-2 pl-4 pr-2">
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 xs:gap-x-6">
         <label htmlFor="search">
-          <Image
+          <img
             src="/assets/icon-search.svg"
             alt="magnifying-glass"
-            width={20}
-            height={20}
+            className="h-5 w-5 xs:h-6 xs:w-6"
           />
         </label>
         <input
@@ -29,7 +28,7 @@ const SearchBar: FC = () => {
           type="text"
           placeholder="Search GitHub username…"
           ref={inputRef}
-          className="placeholder-grayishBlue"
+          className="placeholder-grayishBlue xs:text-[18px]"
         />
       </div>
       <Button />

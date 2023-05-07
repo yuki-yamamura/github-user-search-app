@@ -4,10 +4,14 @@
 
 @layer base {
   html {
-    @apply min-h-screen bg-lightBlue  text-grayishBlue;
+    @apply bg-lightBlue text-grayishBlue;
   }
 
   body {
-    @apply mx-auto px-6 text-[13px];
+    @apply mx-auto px-6 text-[13px] xs:text-base;
+  }
+
+  main {
+    @apply min-h-screen;
   }
 }
