@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       <main className="mx-auto flex max-w-xl flex-col justify-center md:max-w-3xl">
         <div className="mb-9 mt-8 flex items-center justify-between">
           {/* TODO: implement dark mode */}
-          <h1 className="text-[26px] text-black">divfinder</h1>
+          <h1 className="text-[26px] text-black">devfinder</h1>
           <div className="flex gap-x-5">
             <div className="text-[13px]">DARK</div>
             <Image
