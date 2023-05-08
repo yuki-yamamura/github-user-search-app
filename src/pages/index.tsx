@@ -20,13 +20,17 @@ const Home: NextPage = () => {
           {/* TODO: implement dark mode */}
           <h1 className="text-[26px] text-black">devfinder</h1>
           <div className="flex gap-x-5">
-            <div className="text-[13px]">DARK</div>
-            <Image
-              src="/assets/icon-moon.svg"
-              alt="moon"
-              width={20}
-              height={20}
-            />
+            <label htmlFor="theme" className="uppercase">
+              dark
+            </label>
+            <button id="theme" type="button">
+              <Image
+                src="/assets/icon-moon.svg"
+                alt="moon"
+                width={20}
+                height={20}
+              />
+            </button>
           </div>
         </div>
         <div className="mb-4">
