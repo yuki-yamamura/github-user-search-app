@@ -28,10 +28,6 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
     }
   };
 
-  const userInfo = getUserInfo();
-  const isOpaque = userInfo === null;
-  const displayText = userInfo === null ? 'Not Available' : userInfo;
-
   const getIcon = () => {
     switch (info) {
       case 'blog':
@@ -48,15 +44,22 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
     }
   };
 
+  const userInfo = getUserInfo();
+  const icon = getIcon();
+  const isOpaque = userInfo === null;
+  const displayText = userInfo === null ? 'Not Available' : userInfo;
+
   return (
     <li className={`flex gap-x-2 ${isOpaque ? 'opacity-50' : ''}`}>
-      <label htmlFor={info}>{getIcon()}</label>
+      <label htmlFor={info}>{icon}</label>
       {/http(s):\/\//.test(displayText) ? (
-        <a href={displayText}>
-          <div id={info}>{displayText}</div>
+        <a id={info} href={displayText}>
+          {displayText}
         </a>
       ) : (
-        <div id={info}>{displayText}</div>
+        <div id={info} aria-label={info}>
+          {displayText}
+        </div>
       )}
     </li>
   );

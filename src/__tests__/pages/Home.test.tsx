@@ -25,4 +25,33 @@ describe('initialization', () => {
 
     expect(themeButton).not.toBeInTheDocument();
   });
+
+  test("renders octocat's primary profile at first", async () => {
+    render(<Home />);
+
+    const name = await screen.findByText('The Octocat');
+    const username = screen.getByText('@octocat');
+    const avatar = screen.getByRole('img', { name: /avatar/i });
+
+    expect(name).toBeInTheDocument();
+    expect(username).toBeInTheDocument();
+    expect(avatar).toBeInTheDocument();
+  });
+
+  test('renders enabled blog link to the GitHub official site', async () => {
+    render(<Home />);
+
+    const blogLink = await screen.findByRole('link', { name: /blog/i });
+
+    expect(blogLink).toHaveTextContent('https://github.blog');
+    expect(blogLink).toBeEnabled();
+  });
+
+  test('should not render twitter username since octocat has no twitter account', async () => {
+    render(<Home />);
+
+    const twitterUsername = await screen.findByLabelText(/twitter/i);
+
+    expect(twitterUsername).toHaveTextContent(/not available/i);
+  });
 });

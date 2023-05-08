@@ -1,12 +1,22 @@
+import axios from 'axios';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import UserProfile from '@/components/UserProfile';
-import { fakeUser } from '@/mocks/fakeData';
 import { User } from '@/types/User';
 
 const Home: NextPage = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // fetch octocat's information as initial rendering showing it to user as an example.
+    void axios
+      .get<User>('https://api.github.com/users/octocat')
+      .then((res) => setUser(res.data));
+  }, []);
+
   return (
     <>
       <Head>
@@ -36,9 +46,11 @@ const Home: NextPage = () => {
         <div className="mb-4">
           <SearchBar />
         </div>
-        <div className="mb-20">
-          <UserProfile user={fakeUser as User} />
-        </div>
+        {user && (
+          <div className="mb-20">
+            <UserProfile user={user} />
+          </div>
+        )}
       </main>
     </>
   );
