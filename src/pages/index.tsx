@@ -2,13 +2,31 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import UserProfile from '@/components/UserProfile';
 import { User } from '@/types/User';
 
 const Home: NextPage = () => {
+  const [inputValue, setInputValue] = useState('');
   const [user, setUser] = useState<User | null>(null);
+
+  const handleSubmit = () => {
+    // TODO: handle error response
+    void axios
+      .get<User>(`https://api.github.com/users/${inputValue}`)
+      .then((res) => setUser(res.data));
+  };
+
+  const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return;
+
+    handleSubmit();
+  };
 
   useEffect(() => {
     // fetch octocat's information as initial rendering showing it to user as an example.
@@ -44,7 +62,11 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="mb-4">
-          <SearchBar />
+          <SearchBar
+            handleSubmit={handleSubmit}
+            handleKeyDown={handleKeyDown}
+            handleType={handleType}
+          />
         </div>
         {user && (
           <div className="mb-20">

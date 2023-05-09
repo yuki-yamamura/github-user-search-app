@@ -1,7 +1,15 @@
 import { FC } from 'react';
 
-const Button: FC = () => (
-  <button type="button" className="rounded-lg bg-blue px-4 py-3 text-white">
+type Props = {
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
+
+const Button: FC<Props> = ({ handleClick }) => (
+  <button
+    type="button"
+    className="rounded-lg bg-blue px-4 py-3 text-white"
+    onClick={handleClick}
+  >
     Search
   </button>
 );

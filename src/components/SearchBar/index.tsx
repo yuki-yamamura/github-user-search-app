@@ -2,7 +2,13 @@
 import { FC, useEffect, useRef } from 'react';
 import Button from './Button';
 
-const SearchBar: FC = () => {
+type Props = {
+  handleSubmit: () => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleType: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const SearchBar: FC<Props> = ({ handleSubmit, handleType, handleKeyDown }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -14,7 +20,7 @@ const SearchBar: FC = () => {
   }, []);
 
   return (
-    <form className="flex items-center justify-between rounded-2xl bg-white py-2 pl-4 pr-2">
+    <div className="flex items-center justify-between rounded-2xl bg-white py-2 pl-4 pr-2">
       <div className="flex gap-x-2 xs:gap-x-6">
         <label htmlFor="search">
           <img
@@ -29,10 +35,12 @@ const SearchBar: FC = () => {
           placeholder="Search GitHub username…"
           ref={inputRef}
           className="placeholder-grayishBlue xs:text-[18px]"
+          onChange={handleType}
+          onKeyDown={handleKeyDown}
         />
       </div>
-      <Button />
-    </form>
+      <Button handleClick={handleSubmit} />
+    </div>
   );
 };
 
