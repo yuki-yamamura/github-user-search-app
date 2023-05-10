@@ -6,9 +6,15 @@ type Props = {
   handleSubmit: () => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleType: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isError: boolean;
 };
 
-const SearchBar: FC<Props> = ({ handleSubmit, handleType, handleKeyDown }) => {
+const SearchBar: FC<Props> = ({
+  handleSubmit,
+  handleType,
+  handleKeyDown,
+  isError,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -25,7 +31,7 @@ const SearchBar: FC<Props> = ({ handleSubmit, handleType, handleKeyDown }) => {
         <label htmlFor="search">
           <img
             src="/assets/icon-search.svg"
-            alt="magnifying-glass"
+            alt="search"
             className="h-5 w-5 xs:h-6 xs:w-6"
           />
         </label>
@@ -38,6 +44,11 @@ const SearchBar: FC<Props> = ({ handleSubmit, handleType, handleKeyDown }) => {
           onChange={handleType}
           onKeyDown={handleKeyDown}
         />
+        {isError && (
+          <div role="alert" className="text-red xs:text-[15px]">
+            No results
+          </div>
+        )}
       </div>
       <Button handleClick={handleSubmit} />
     </div>

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -10,12 +10,26 @@ import { User } from '@/types/User';
 const Home: NextPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [user, setUser] = useState<User | null>(null);
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = () => {
-    // TODO: handle error response
+    // if username is empty, do nothing
+    if (inputValue === '') return;
+
     void axios
       .get<User>(`https://api.github.com/users/${inputValue}`)
-      .then((res) => setUser(res.data));
+      .then((res) => {
+        setUser(res.data);
+        setIsError(false);
+      })
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 404) {
+          setIsError(true);
+        } else {
+          console.error(error);
+          throw error;
+        }
+      });
   };
 
   const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +80,7 @@ const Home: NextPage = () => {
             handleSubmit={handleSubmit}
             handleKeyDown={handleKeyDown}
             handleType={handleType}
+            isError={isError}
           />
         </div>
         {user && (

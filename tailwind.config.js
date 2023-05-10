@@ -7,12 +7,13 @@ module.exports = {
     },
     extend: {
       colors: {
+        black: 'hsl(217, 21%, 21%)',
         blue: 'hsl(212, 100%, 50%)',
+        darkGray: 'hsl(222, 41%, 20%)',
         gray: 'hsl(217, 20%, 51%)',
         grayishBlue: 'hsl(217, 35%, 45%)',
-        black: 'hsl(217, 21%, 21%)',
         lightBlue: 'hsl(227, 100%, 98%)',
-        darkGray: 'hsl(222, 41%, 20%)',
+        red: 'hsla(0, 91%, 62%, 1)',
       },
       screens: {
         xs: '540px',
