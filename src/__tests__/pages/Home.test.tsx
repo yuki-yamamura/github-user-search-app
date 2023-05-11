@@ -58,40 +58,90 @@ describe('initialization', () => {
 });
 
 describe('user interactions', () => {
-  test('renders user received from server when user click search button', async () => {
-    render(<Home />);
-    const user = userEvent.setup();
+  describe('happy paths', () => {
+    test('renders user received from server when user click search button', async () => {
+      render(<Home />);
+      const user = userEvent.setup();
 
-    // confirm that there is octocat in the page before user interaction.
-    const initialUsername = await screen.findByText('The Octocat');
-    expect(initialUsername).toBeInTheDocument();
+      // confirm that there is octocat in the page before user interaction.
+      const initialUsername = await screen.findByText('The Octocat');
+      expect(initialUsername).toBeInTheDocument();
 
-    const searchInput = screen.getByRole('textbox', { name: /search/i });
-    const searchButton = screen.getByRole('button', { name: /search/i });
+      const searchInput = screen.getByRole('textbox', { name: /search/i });
+      const searchButton = screen.getByRole('button', { name: /search/i });
 
-    // types username that user wait to get its information.
-    await user.clear(searchInput);
-    await user.type(searchInput, 'yuki-yamamura');
+      // types username that user wait to get its information.
+      await user.clear(searchInput);
+      await user.type(searchInput, 'yuki-yamamura');
 
-    // clicks search button to search for username.
-    await user.click(searchButton);
+      // clicks search button to search for username.
+      await user.click(searchButton);
 
-    // now, name is the same as which searched user has, not 'octocat'.
-    const searchedUsername = await screen.findByText('Yuki Yamamura');
-    expect(searchedUsername).toBeInTheDocument();
-    expect(screen.queryByText('The Octocat')).not.toBeInTheDocument();
+      // now, name is the same as which searched user has, not 'octocat'.
+      const searchedUsername = await screen.findByText('Yuki Yamamura');
+      expect(searchedUsername).toBeInTheDocument();
+      expect(screen.queryByText('The Octocat')).not.toBeInTheDocument();
+    });
+
+    test('can execute search by clicking button or pressing Enter key either', async () => {
+      render(<Home />);
+      const user = userEvent.setup();
+
+      const searchInput = screen.getByRole('textbox', { name: /search/i });
+
+      await user.clear(searchInput);
+      await user.type(searchInput, 'yuki-yamamura{Enter}');
+
+      const searchedUsername = await screen.findByText('Yuki Yamamura');
+      expect(searchedUsername).toBeInTheDocument();
+    });
+
+    test('error should disappear if use searches for existing username', async () => {
+      render(<Home />);
+      const user = userEvent.setup();
+
+      const searchInput = screen.getByRole('textbox', { name: /search/i });
+      const searchButton = screen.getByRole('button', { name: /search/i });
+
+      await user.clear(searchInput);
+      await user.type(searchInput, 'no-such-a-user');
+      await user.click(searchButton);
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+
+      await user.clear(searchInput);
+      await user.type(searchInput, 'yuki-yamamura');
+      await user.click(searchButton);
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 
-  test('can execute search by clicking button or pressing Enter key either', async () => {
+  describe('unhappy paths', () => {
+    test('shows error if user searches for no existing username', async () => {
+      render(<Home />);
+      const user = userEvent.setup();
+
+      const searchInput = screen.getByRole('textbox', { name: /search/i });
+      const searchButton = screen.getByRole('button', { name: /search/i });
+
+      await user.clear(searchInput);
+      await user.type(searchInput, 'no-such-a-user');
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+      await user.click(searchButton);
+      const alert = await screen.findByRole('alert');
+      expect(alert).toHaveTextContent(/no results/i);
+    });
+  });
+
+  test('should not change anything if user searches for empty value', async () => {
     render(<Home />);
     const user = userEvent.setup();
 
-    const searchInput = screen.getByRole('textbox', { name: /search/i });
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    await user.click(searchButton);
 
-    await user.clear(searchInput);
-    await user.type(searchInput, 'yuki-yamamura{Enter}');
-
-    const searchedUsername = await screen.findByText('Yuki Yamamura');
-    expect(searchedUsername).toBeInTheDocument();
+    const name = await screen.findByText('The Octocat');
+    await expect(screen.findByRole('alert')).rejects.toThrow();
+    expect(name).toBeInTheDocument();
   });
 });

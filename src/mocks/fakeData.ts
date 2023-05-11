@@ -73,3 +73,46 @@ export const fakeUsers = [
     updated_at: '2023-05-14T01:10:40Z',
   },
 ];
+
+export const fakeError = {
+  data: {
+    message: 'Not Found',
+    documentation_url:
+      'https://docs.github.com/rest/reference/users#get-a-user',
+  },
+  status: 404,
+  statusText: '',
+  headers: {
+    'content-length': '117',
+    'content-type': 'application/json; charset=utf-8',
+    'x-github-media-type': 'github.v3',
+    'x-github-request-id': 'E394:3763:1B1BB25:1CE69EF:646129C9',
+    'x-ratelimit-limit': '60',
+    'x-ratelimit-remaining': '34',
+    'x-ratelimit-reset': '1684089531',
+    'x-ratelimit-resource': 'core',
+    'x-ratelimit-used': '26',
+  },
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false,
+    },
+    adapter: ['xhr', 'http'],
+    transformRequest: [null],
+    transformResponse: [null],
+    timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: {},
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+    },
+    method: 'get',
+    url: 'https://api.github.com/users/no-such-a-user',
+  },
+  request: {},
+};
