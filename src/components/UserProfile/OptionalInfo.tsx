@@ -46,8 +46,10 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
 
   const userInfo = getUserInfo();
   const icon = getIcon();
-  const isOpaque = userInfo === null;
-  const displayText = userInfo === null ? 'Not Available' : userInfo;
+  // GitHub user profile may be an empty string, so it should be disabled also.
+  const isOpaque = userInfo === null || userInfo?.trim() === '';
+  const displayText =
+    userInfo === null || userInfo?.trim() === '' ? 'Not Available' : userInfo;
 
   return (
     <li className={`flex gap-x-2 ${isOpaque ? 'opacity-50' : ''}`}>
