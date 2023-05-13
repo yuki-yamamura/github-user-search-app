@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import Button from './Button';
 
 type Props = {
@@ -15,20 +15,10 @@ const SearchBar: FC<Props> = ({
   handleKeyDown,
   isError,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const input = inputRef.current;
-    const placeholder = input?.placeholder;
-    if (input !== null && placeholder !== undefined) {
-      input.setAttribute('size', placeholder.length.toString());
-    }
-  }, []);
-
   return (
-    <div className="flex items-center justify-between rounded-2xl bg-white py-2 pl-4 pr-2">
-      <div className="flex gap-x-2 xs:gap-x-6">
-        <label htmlFor="search">
+    <div className="flex items-center justify-between gap-x-2 rounded-2xl bg-white py-2 pl-4 pr-2 xs:gap-x-6">
+      <div className="flex w-full min-w-0 gap-x-2 xs:gap-x-6">
+        <label htmlFor="search" className="min-w-fit">
           <img
             src="/assets/icon-search.svg"
             alt="search"
@@ -39,13 +29,15 @@ const SearchBar: FC<Props> = ({
           id="search"
           type="text"
           placeholder="Search GitHub username…"
-          ref={inputRef}
-          className="placeholder-grayishBlue xs:text-[18px]"
+          className="w-full min-w-0 placeholder-grayishBlue xs:text-[18px]"
           onChange={handleType}
           onKeyDown={handleKeyDown}
         />
         {isError && (
-          <div role="alert" className="text-red xs:text-[15px]">
+          <div
+            role="alert"
+            className="min-w-fit whitespace-nowrap text-red xs:text-[15px]"
+          >
             No results
           </div>
         )}
