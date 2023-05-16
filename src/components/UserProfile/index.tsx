@@ -33,7 +33,10 @@ const UserProfile: FC<Props> = ({ user }) => {
           <label htmlFor="repos" className="text-[11px] xs:text-[13px]">
             Repos
           </label>
-          <div id="repos" className="text-base font-bold xs:text-[22px]">
+          <div
+            id="repos"
+            className="text-base font-bold text-bold xs:text-[22px]"
+          >
             {user.public_repos}
           </div>
         </div>
@@ -41,7 +44,10 @@ const UserProfile: FC<Props> = ({ user }) => {
           <label htmlFor="followers" className="text-[11px] xs:text-[13px]">
             Followers
           </label>
-          <div id="followers" className="text-base font-bold xs:text-[22px]">
+          <div
+            id="followers"
+            className="text-base font-bold text-bold xs:text-[22px]"
+          >
             {user.followers}
           </div>
         </div>
@@ -49,7 +55,10 @@ const UserProfile: FC<Props> = ({ user }) => {
           <label htmlFor="following" className="text-[11px] xs:text-[13px]">
             Following
           </label>
-          <div id="following" className="text-base font-bold xs:text-[22px]">
+          <div
+            id="following"
+            className="text-base font-bold text-bold xs:text-[22px]"
+          >
             {user.following}
           </div>
         </div>

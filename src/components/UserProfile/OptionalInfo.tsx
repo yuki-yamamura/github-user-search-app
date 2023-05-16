@@ -52,10 +52,18 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
     userInfo === null || userInfo?.trim() === '' ? 'Not Available' : userInfo;
 
   return (
-    <li className={`flex gap-x-2 ${isOpaque ? 'opacity-50' : ''}`}>
+    <li
+      className={`group flex items-center gap-x-4 ${
+        isOpaque ? 'opacity-50' : ''
+      }`}
+    >
       <label htmlFor={info}>{icon}</label>
       {/http(s):\/\//.test(displayText) ? (
-        <a id={info} href={displayText}>
+        <a
+          id={info}
+          href={displayText}
+          className="focus:underline group-hover:underline"
+        >
           {displayText}
         </a>
       ) : (

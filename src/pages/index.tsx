@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import MoonIcon from '@/components/icons/MoonIcon';
+import SunIcon from '@/components/icons/SunIcon';
 import SearchBar from '@/components/SearchBar';
 import UserProfile from '@/components/UserProfile';
 import { User } from '@/types/User';
@@ -73,30 +74,24 @@ const Home: NextPage = () => {
       <main className="mx-auto flex max-w-xl flex-col justify-center md:max-w-3xl">
         <div className="mb-9 mt-8 flex items-center justify-between">
           <h1 className="text-[26px] text-bold">devfinder</h1>
-          <div className="flex gap-x-5">
-            <label htmlFor="theme">{theme === 'dark' ? 'LIGHT' : 'DARK'}</label>
-            <button id="theme" type="button" onClick={handleToggleTheme}>
-              {theme === 'dark' ? (
-                <Image
-                  src="/assets/icon-sun.svg"
-                  alt="sun"
-                  width={20}
-                  height={20}
-                  className="fill-foreground"
-                />
-              ) : (
-                <Image
-                  src="/assets/icon-moon.svg"
-                  alt="moon"
-                  width={20}
-                  height={20}
-                  className="fill-foreground"
-                />
-              )}
+          <div className="group flex cursor-pointer gap-x-5 text-[13px] tracking-widest">
+            <label
+              htmlFor="theme"
+              className="cursor-pointer group-hover:text-secondary"
+            >
+              {theme === 'dark' ? 'LIGHT' : 'DARK'}
+            </label>
+            <button
+              id="theme"
+              type="button"
+              onClick={handleToggleTheme}
+              className="fill-foreground focus:fill-secondary group-hover:fill-secondary"
+            >
+              {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
           </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 drop-shadow-xl xs:mb-6">
           <SearchBar
             handleSubmit={handleSubmit}
             handleKeyDown={handleKeyDown}
@@ -105,7 +100,7 @@ const Home: NextPage = () => {
           />
         </div>
         {user && (
-          <div className="mb-20">
+          <div className="mb-20 drop-shadow-xl">
             <UserProfile user={user} />
           </div>
         )}

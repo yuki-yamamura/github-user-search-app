@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC } from 'react';
+import SearchIcon from '../icons/SearchIcon';
 import Button from './Button';
 
 type Props = {
@@ -16,20 +17,16 @@ const SearchBar: FC<Props> = ({
   isError,
 }) => {
   return (
-    <div className="flex items-center justify-between gap-x-2 rounded-2xl bg-card py-2 pl-4 pr-2 xs:gap-x-6">
+    <div className="flex cursor-pointer items-center justify-between gap-x-2 rounded-2xl bg-card py-2 pl-4 pr-2 xs:gap-x-6 xs:pl-8">
       <div className="flex w-full min-w-0 gap-x-2 xs:gap-x-6">
-        <label htmlFor="search" className="min-w-fit">
-          <img
-            src="/assets/icon-search.svg"
-            alt="search"
-            className="h-5 w-5 xs:h-6 xs:w-6"
-          />
+        <label htmlFor="search" className="min-w-fit cursor-pointer">
+          <SearchIcon />
         </label>
         <input
           id="search"
           type="text"
           placeholder="Search GitHub username…"
-          className="w-full min-w-0 bg-inherit placeholder-foreground xs:text-[18px]"
+          className="w-full min-w-0 bg-inherit placeholder-foreground outline-none xs:text-[18px]"
           onChange={handleType}
           onKeyDown={handleKeyDown}
         />
