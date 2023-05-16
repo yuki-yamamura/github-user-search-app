@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import dayjs from 'dayjs';
 import { FC } from 'react';
 import { User } from '@/types/User';
@@ -13,6 +12,7 @@ const UserProfile: FC<Props> = ({ user }) => {
 
   return (
     <div className="grid grid-cols-12 items-center rounded-2xl bg-card px-6 pb-12 pt-8 md:p-12">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`${user.avatar_url}.svg`}
         alt="avatar"

@@ -11,23 +11,17 @@ describe('initialization', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  test('starts out light theme', () => {
+  test('starts out light theme, not dark theme', () => {
     render(<Home />);
 
-    const themeButton = screen.getByRole('button', { name: /dark/i });
+    const darkButton = screen.getByRole('button', { name: /dark/i });
+    const lightButton = screen.queryByRole('button', { name: /light/i });
 
-    expect(themeButton).toBeInTheDocument();
+    expect(darkButton).toBeInTheDocument();
+    expect(lightButton).not.toBeInTheDocument();
   });
 
-  test('should not start out dark theme', () => {
-    render(<Home />);
-
-    const themeButton = screen.queryByRole('button', { name: /light/i });
-
-    expect(themeButton).not.toBeInTheDocument();
-  });
-
-  test("renders octocat's primary profile at first", async () => {
+  test("renders octocat's profile at first", async () => {
     render(<Home />);
 
     const name = await screen.findByText('The Octocat');
@@ -39,7 +33,7 @@ describe('initialization', () => {
     expect(avatar).toBeInTheDocument();
   });
 
-  test('renders enabled blog link to the GitHub official site', async () => {
+  test('renders blog link correctly', async () => {
     render(<Home />);
 
     const blogLink = await screen.findByRole('link', { name: /blog/i });
@@ -48,9 +42,10 @@ describe('initialization', () => {
     expect(blogLink).toBeEnabled();
   });
 
-  test('should not render twitter username since octocat has no twitter account', async () => {
+  test('should render "not available" for profile not being filled', async () => {
     render(<Home />);
 
+    // octocat has no twitter account.
     const twitterUsername = await screen.findByLabelText(/twitter/i);
 
     expect(twitterUsername).toHaveTextContent(/not available/i);
@@ -59,11 +54,11 @@ describe('initialization', () => {
 
 describe('user interactions', () => {
   describe('happy paths', () => {
-    test('renders user received from server when user click search button', async () => {
+    test("renders GitHub user's profile received from server after user click search button", async () => {
       render(<Home />);
       const user = userEvent.setup();
 
-      // confirm that there is octocat in the page before user interaction.
+      // confirm that there is octocat's profile in the page before searching.
       const initialUsername = await screen.findByText('The Octocat');
       expect(initialUsername).toBeInTheDocument();
 
@@ -74,16 +69,16 @@ describe('user interactions', () => {
       await user.clear(searchInput);
       await user.type(searchInput, 'yuki-yamamura');
 
-      // clicks search button to search for username.
+      // clicks search button to find the user.
       await user.click(searchButton);
 
-      // now, name is the same as which searched user has, not 'octocat'.
+      // now, name is the same as which searched user has, not "octocat".
       const searchedUsername = await screen.findByText('Yuki Yamamura');
       expect(searchedUsername).toBeInTheDocument();
       expect(screen.queryByText('The Octocat')).not.toBeInTheDocument();
     });
 
-    test('can execute search by clicking button or pressing Enter key either', async () => {
+    test('can execute search by pressing enter key either', async () => {
       render(<Home />);
       const user = userEvent.setup();
 
@@ -116,7 +111,7 @@ describe('user interactions', () => {
   });
 
   describe('unhappy paths', () => {
-    test('shows error if user searches for no existing username', async () => {
+    test('shows error if user searches for not existing username', async () => {
       render(<Home />);
       const user = userEvent.setup();
 

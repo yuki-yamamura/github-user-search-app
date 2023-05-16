@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { FC } from 'react';
 import BlogIcon from '@/components/icons/BlogIcon';
 import CompanyIcon from '@/components/icons/CompanyIcon';
@@ -46,7 +45,7 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
 
   const userInfo = getUserInfo();
   const icon = getIcon();
-  // GitHub user profile may be an empty string, so it should be disabled also.
+  // GitHub user profile may include an empty string. so it should be disabled also.
   const isOpaque = userInfo === null || userInfo?.trim() === '';
   const displayText =
     userInfo === null || userInfo?.trim() === '' ? 'Not Available' : userInfo;

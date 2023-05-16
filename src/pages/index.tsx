@@ -14,9 +14,23 @@ const Home: NextPage = () => {
   const [isError, setIsError] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  const handleSubmit = () => {
+  const handleSubmit = (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     // if username is empty, do nothing
     if (inputValue === '') return;
+    // ignore any keydown events without enter
+    if (e.target instanceof HTMLInputElement) {
+      const keyboardEvent = e as React.KeyboardEvent;
+      if (
+        keyboardEvent.nativeEvent.isComposing ||
+        keyboardEvent.key !== 'Enter'
+      ) {
+        return;
+      }
+    }
 
     void axios
       .get<User>(`https://api.github.com/users/${inputValue}`)
@@ -36,12 +50,6 @@ const Home: NextPage = () => {
 
   const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing || e.key !== 'Enter') return;
-
-    handleSubmit();
   };
 
   const handleToggleTheme = () => {
@@ -94,7 +102,6 @@ const Home: NextPage = () => {
         <div className="mb-4 drop-shadow-xl xs:mb-6">
           <SearchBar
             handleSubmit={handleSubmit}
-            handleKeyDown={handleKeyDown}
             handleType={handleType}
             isError={isError}
           />
