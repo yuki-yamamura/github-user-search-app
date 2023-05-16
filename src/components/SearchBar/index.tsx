@@ -16,7 +16,7 @@ const SearchBar: FC<Props> = ({
   isError,
 }) => {
   return (
-    <div className="flex items-center justify-between gap-x-2 rounded-2xl bg-white py-2 pl-4 pr-2 xs:gap-x-6">
+    <div className="flex items-center justify-between gap-x-2 rounded-2xl bg-card py-2 pl-4 pr-2 xs:gap-x-6">
       <div className="flex w-full min-w-0 gap-x-2 xs:gap-x-6">
         <label htmlFor="search" className="min-w-fit">
           <img
@@ -29,7 +29,7 @@ const SearchBar: FC<Props> = ({
           id="search"
           type="text"
           placeholder="Search GitHub username…"
-          className="w-full min-w-0 placeholder-grayishBlue xs:text-[18px]"
+          className="w-full min-w-0 bg-inherit placeholder-foreground xs:text-[18px]"
           onChange={handleType}
           onKeyDown={handleKeyDown}
         />

@@ -11,6 +11,7 @@ const Home: NextPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [isError, setIsError] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   const handleSubmit = () => {
     // if username is empty, do nothing
@@ -42,12 +43,24 @@ const Home: NextPage = () => {
     handleSubmit();
   };
 
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   useEffect(() => {
-    // fetch octocat's information as initial rendering showing it to user as an example.
+    // fetch octocat's information as initial rendering so that user will find an example.
     void axios
       .get<User>('https://api.github.com/users/octocat')
       .then((res) => setUser(res.data));
   }, []);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [theme]);
 
   return (
     <>
@@ -59,19 +72,27 @@ const Home: NextPage = () => {
       </Head>
       <main className="mx-auto flex max-w-xl flex-col justify-center md:max-w-3xl">
         <div className="mb-9 mt-8 flex items-center justify-between">
-          {/* TODO: implement dark mode */}
-          <h1 className="text-[26px] text-black">devfinder</h1>
+          <h1 className="text-[26px] text-bold">devfinder</h1>
           <div className="flex gap-x-5">
-            <label htmlFor="theme" className="uppercase">
-              dark
-            </label>
-            <button id="theme" type="button">
-              <Image
-                src="/assets/icon-moon.svg"
-                alt="moon"
-                width={20}
-                height={20}
-              />
+            <label htmlFor="theme">{theme === 'dark' ? 'LIGHT' : 'DARK'}</label>
+            <button id="theme" type="button" onClick={handleToggleTheme}>
+              {theme === 'dark' ? (
+                <Image
+                  src="/assets/icon-sun.svg"
+                  alt="sun"
+                  width={20}
+                  height={20}
+                  className="fill-foreground"
+                />
+              ) : (
+                <Image
+                  src="/assets/icon-moon.svg"
+                  alt="moon"
+                  width={20}
+                  height={20}
+                  className="fill-foreground"
+                />
+              )}
             </button>
           </div>
         </div>
