@@ -57,16 +57,16 @@ const OptionalInfo: FC<Props> = ({ user, info }) => {
       }`}
     >
       <label htmlFor={info}>{icon}</label>
-      {/http(s):\/\//.test(displayText) ? (
+      {/https?:\/\//.test(displayText) ? (
         <a
           id={info}
           href={displayText}
-          className="focus:underline group-hover:underline"
+          className="block truncate focus:underline group-hover:underline"
         >
           {displayText}
         </a>
       ) : (
-        <div id={info} aria-label={info}>
+        <div id={info} aria-label={info} className="truncate">
           {displayText}
         </div>
       )}
